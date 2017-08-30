@@ -1,0 +1,42 @@
+<style type="text/css">
+  .input-group-addon.primary {
+    color: rgb(255, 255, 255);
+    background-color: rgb(50, 118, 177);
+    border-color: rgb(40, 94, 142);
+  }
+  .input-group-addon.success {
+    color: rgb(255, 255, 255);
+    background-color: rgb(92, 184, 92);
+    border-color: rgb(76, 174, 76);
+  }
+  .input-group-addon.info {
+    color: rgb(255, 255, 255);
+    background-color: rgb(57, 179, 215);
+    border-color: rgb(38, 154, 188);
+  }
+  .input-group-addon.warning {
+    color: rgb(255, 255, 255);
+    background-color: rgb(240, 173, 78);
+    border-color: rgb(238, 162, 54);
+  }
+  .input-group-addon.danger {
+    color: rgb(255, 255, 255);
+    background-color: rgb(217, 83, 79);
+    border-color: rgb(212, 63, 58);
+  }
+
+</style>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="input-group input-group-lg">
+      <span id="connection" class="input-group-addon danger">
+        <i class='fa fa-plug'></i>
+      </span>
+      <input type="text" class="form-control input-lg" id="barcode" placeholder="<%= I18n.t :manual_barcode %>"/>
+      <span class="input-group-btn">
+        <button id="send" type="button" class="btn btn-default btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin '></i> <%=t :loading %>"><%= I18n.t :send %></button>
+      </span>
+    </div>
+  </div>
+</div>

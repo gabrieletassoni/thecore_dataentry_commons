@@ -1,0 +1,75 @@
+<script>
+  //  Proof of concept to control DataWedge via Web Sockets
+  var msg_input_plugin_enable = {
+    "action": "com.symbol.datawedge.api.ACTION_SCANNERINPUTPLUGIN",
+    "extra_key": "com.symbol.datawedge.api.EXTRA_PARAMETER",
+    "extra_value": "ENABLE_PLUGIN"
+  };
+  var msg_input_plugin_disable = {
+    "action": "com.symbol.datawedge.api.ACTION_SCANNERINPUTPLUGIN",
+    "extra_key": "com.symbol.datawedge.api.EXTRA_PARAMETER",
+    "extra_value": "DISABLE_PLUGIN"
+  };
+
+  // var clickedBtn; var code; Gestisco il keypress sull'input
+  $("#barcode").keypress(function (event) {
+    var keycode = (event.keyCode
+      ? event.keyCode
+      : event.which);
+    if (keycode == '13') {
+      $("#send").click();
+    }
+  });
+
+  function resetCurrentBtn() {
+    $(".btn").button('reset');
+    $(".input-lg").prop('disabled', false);
+    sendMessageToServer(msg_input_plugin_enable);
+    // clickedBtn = code = null;
+  }
+  // WEBSOCKET ----------------------------------------------------------------------------------
+  var socketClosed = true;
+  var address = "127.0.0.1";
+  var port = "12345";
+
+  function socketOnError() {
+    console.log("Error");
+    if (!socketClosed)
+      ws.close();
+  }
+
+  function init() {
+    ws = new WebSocket("ws://" + address + ":" + port + "/");
+    ws.onmessage = function (event) {
+      // document.getElementById('socketmessages').innerHTML = event.data + "<BR/>" + document.getElementById('socketmessages').innerHTML; console.log(event.data); Recupero i dati inviati e li aggiungo come val all'input e poi click()
+      $('#barcode').val(event.data);
+      $("#send").click();
+    };
+    //  In production you would want this to be resiliant against the server being killed by Android, by the user navigating between pages or any other unexpected error related to connection.
+    ws.onclose = function () {
+      setSocketStatus("success", "danger");
+      socketClosed = true;
+    };
+    ws.onopen = function () {
+      setSocketStatus("danger", "success");
+      socketClosed = false;
+    };
+    ws.onerror = function (event) {
+      socketOnError();
+    };
+  }
+  function setSocketStatus(origin, to) {
+    $('#connection').removeClass(origin).addClass(to);
+  }
+  function sendMessageToServer(json_msg) {
+    if (socketClosed) {
+      init();
+    } else {
+      ws.send(JSON.stringify(json_msg), function (error) {
+        socketOnError();
+      });
+    }
+  }
+  // Creating the websocket
+  init();
+</script>
