@@ -7,7 +7,7 @@
     if (keycode == '13') {
       $("#send").click();
     } else {
-      // Scrivilo nellìinput field (accumulando)
+      // Scrivilo nell'input field (accumulando)
       $("#barcode").val(function (index, val) {
         return val + event.key;
       })
