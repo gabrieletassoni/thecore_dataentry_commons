@@ -1,0 +1,16 @@
+<script>
+  // var clickedBtn; var code; Gestisco il keypress sull'input
+  $(document).keypress(function (event) {
+    var keycode = (event.keyCode
+      ? event.keyCode
+      : event.which);
+    if (keycode == '13') {
+      $("#send").click();
+    } else {
+      // Scrivilo nellìinput field (accumulando)
+      $("#barcode").val(function (index, val) {
+        return val + event.key;
+      })
+    }
+  });
+</script>
