@@ -1,28 +1,29 @@
 <script>
+  var globalScannedValue = "";
   // var clickedBtn; var code; Gestisco il keypress sull'input
-  function manageSannedKeystrokes(event) {
+  function manageScannedKeystrokes(event) {
     event.stopPropagation();
     var keycode = (event.keyCode
       ? event.keyCode
       : event.which);
     if (keycode == '13') {
+      $("input[name=barcode]").val(globalScannedValue);
+      globalScannedValue = "";
       $("#send").click();
     } else if (event.charCode && event.charCode > 0) {
       // Scrivilo nell'input field (accumulando)
-      $("#barcode").val(function (index, val) {
-        return val + String.fromCharCode(event.charCode);
-      })
+      globalScannedValue += String.fromCharCode(event.charCode);
     }
   }
 
-  $(document).on("keypress", manageSannedKeystrokes);
+  $(document).on("keypress", manageScannedKeystrokes);
   // Se $("#barcode") si becca il focus, elimino il keypress
   $("#barcode").focusin(function(){
     // Blocco il keypress del document
-    $(document).off("keypress", manageSannedKeystrokes);
+    $(document).off("keypress", manageScannedKeystrokes);
   });
   $("#barcode").focusout(function(){
     // Blocco il keypress del document
-    $(document).on("keypress", manageSannedKeystrokes);
+    $(document).on("keypress", manageScannedKeystrokes);
   });
 </script>
