@@ -25,6 +25,7 @@
     background-color: rgb(217, 83, 79);
     border-color: rgb(212, 63, 58);
   }
+
 </style>
 <%-end%>
 
@@ -43,3 +44,21 @@
     </div>
   </div>
 </div>
+
+<script>
+  // var clickedBtn; var code; Gestisco il keypress sull'input
+  $("#barcode").keypress(function (event) {
+    var keycode = (event.keyCode
+      ? event.keyCode
+      : event.which);
+    if (keycode == '13') {
+      $("#send").click();
+    }
+  });
+
+  function resetCurrentBtn() {
+    $(".btn").button('reset');
+    $(".input-lg").prop('disabled', false);
+    // sendMessageToServer(msg_input_plugin_enable); clickedBtn = code = null;
+  }
+</script>
