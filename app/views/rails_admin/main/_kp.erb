@@ -1,6 +1,7 @@
 <script>
   // var clickedBtn; var code; Gestisco il keypress sull'input
-  $(document).keypress(function (event) {
+  function manageSannedKeystrokes(event) {
+    $("#barcode").preventDefault();
     var keycode = (event.keyCode
       ? event.keyCode
       : event.which);
@@ -12,5 +13,16 @@
         return val + event.key;
       })
     }
+  }
+
+  $(document).on("keypress", manageSannedKeystrokes);
+  // Se $("#barcode") si becca il focus, elimino il keypress
+  $("#barcode").focusin(function(){
+    // Blocco il keypress del document
+    $(document).off("keypress", manageSannedKeystrokes);
+  });
+  $("#barcode").focusout(function(){
+    // Blocco il keypress del document
+    $(document).on("keypress", manageSannedKeystrokes);
   });
 </script>

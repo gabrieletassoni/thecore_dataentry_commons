@@ -24,7 +24,7 @@
   function resetCurrentBtn() {
     $(".btn").button('reset');
     $(".input-lg").prop('disabled', false);
-    sendMessageToServer(msg_input_plugin_enable);
+    // sendMessageToServer(msg_input_plugin_enable);
     // clickedBtn = code = null;
   }
   // WEBSOCKET ----------------------------------------------------------------------------------
@@ -63,15 +63,15 @@
   function setSocketStatus(origin, to) {
     $('#connection').removeClass(origin).addClass(to);
   }
-  function sendMessageToServer(json_msg) {
-    if (socketClosed) {
-      init();
-    } else {
-      ws.send(JSON.stringify(json_msg), function (error) {
-        socketOnError();
-      });
-    }
-  }
+  // function sendMessageToServer(json_msg) {
+  //   if (socketClosed) {
+  //     init();
+  //   } else {
+  //     ws.send(JSON.stringify(json_msg), function (error) {
+  //       socketOnError();
+  //     });
+  //   }
+  // }
 
   function tryInit() {
     // Solo se la socket è chiusa e siamo in ambiente android
