@@ -1,34 +1,34 @@
 <script>
-  function DumpObject(obj) {
-    var od = new Object;
-    var result = "";
-    var len = 0;
-
-    for (var property in obj) {
-      var value = obj[property];
-      if (typeof value == 'string')
-        value = "'" + value + "'";
-      else if (typeof value == 'object') {
-        if (value instanceof Array) {
-          value = "[ " + value + " ]";
-        } else {
-          var ood = DumpObject(value);
-          value = "{ " + ood.dump + " }";
-        }
-      }
-      result += "'" + property + "' : " + value + ", ";
-      len++;
-    }
-    od.dump = result.replace(/, $/, "");
-    od.len = len;
-
-    return od;
-  }
+  // function DumpObject(obj) {
+  //   var od = new Object;
+  //   var result = "";
+  //   var len = 0;
+  //
+  //   for (var property in obj) {
+  //     var value = obj[property];
+  //     if (typeof value == 'string')
+  //       value = "'" + value + "'";
+  //     else if (typeof value == 'object') {
+  //       if (value instanceof Array) {
+  //         value = "[ " + value + " ]";
+  //       } else {
+  //         var ood = DumpObject(value);
+  //         value = "{ " + ood.dump + " }";
+  //       }
+  //     }
+  //     result += "'" + property + "' : " + value + ", ";
+  //     len++;
+  //   }
+  //   od.dump = result.replace(/, $/, "");
+  //   od.len = len;
+  //
+  //   return od;
+  // }
   var globalScannedValue = "";
   // var clickedBtn; var code; Gestisco il keypress sull'input
   function manageScannedKeystrokes(event) {
-    alert("Non credo vada");
-    alert("Ciao: " + DumpObject(event));
+    // alert("Non credo vada");
+    // alert("Ciao: " + DumpObject(event));
     var keycode = (event.keyCode
       ? event.keyCode
       : event.which);
@@ -39,7 +39,7 @@
       $("#send").click();
     } else {
       // Scrivilo nell'input field (accumulando)
-      globalScannedValue += String.fromCharCode(event.charCode);
+      globalScannedValue += keycode; //String.fromCharCode(event.charCode);
     }
   }
 
