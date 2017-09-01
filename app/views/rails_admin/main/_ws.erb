@@ -1,3 +1,4 @@
+<input id="label-type" type="hidden"/>
 <script>
   //  Proof of concept to control DataWedge via Web Sockets
   var msg_input_plugin_enable = {
@@ -27,8 +28,12 @@
   function init() {
     ws = new WebSocket("ws://" + address + ":" + port + "/");
     ws.onmessage = function (event) {
-      // document.getElementById('socketmessages').innerHTML = event.data + "<BR/>" + document.getElementById('socketmessages').innerHTML; console.log(event.data); Recupero i dati inviati e li aggiungo come val all'input e poi click()
-      $('#barcode').val(event.data);
+      // event.data ha forma: Barcode (8273878337383) [LABEL-TYPE-EAN13]
+      // il barcode è event.extras["com.symbol.datawedge.data_string"]: String contains the output data as a String. In the case of concatenated barcodes, the decode data is concatenated and sent out as a single string. In the example above: 8273878337383
+      // il label_type è event.extras["com.symbol.datawedge.label_type"]: String contains the barcode label type. In the example above: LABEL-TYPE-EAN13
+      // il decode_data è event.extras["com.symbol.datawedge.decode_data"]: Decode data is returned as a list of byte arrays. In most cases there will be one byte array per decode. For barcode symbologies that support concatenation (i.e. Codabar, Code128, MicroPDF, etc.) the decoded data is stored in multiple byte arrays (one byte array per bar code). Clients can get data in each byte array by passing an index.
+      $('#barcode').val(event.extras["com.symbol.datawedge.data_string"]);
+      $('#label-type').val(event.extras["com.symbol.datawedge.label_type"]);
       $("#send").click();
     };
     //  In production you would want this to be resiliant against the server being killed by Android, by the user navigating between pages or any other unexpected error related to connection.
