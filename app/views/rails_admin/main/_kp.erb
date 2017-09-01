@@ -9,6 +9,7 @@
     if (keycode == '13') {
       $("input[name=barcode]").val(globalScannedValue);
       globalScannedValue = "";
+      alert("GLOBALSCANNED: " + globalScannedValue);
       $("#send").click();
     } else if (event.charCode && event.charCode > 0) {
       // Scrivilo nell'input field (accumulando)
