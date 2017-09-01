@@ -2,7 +2,7 @@
   var globalScannedValue = "";
   // var clickedBtn; var code; Gestisco il keypress sull'input
   function manageScannedKeystrokes(event) {
-    event.stopPropagation();
+    alert(JSON.stringify(event));
     var keycode = (event.keyCode
       ? event.keyCode
       : event.which);
@@ -13,7 +13,6 @@
       $("#send").click();
     } else {
       // Scrivilo nell'input field (accumulando)
-      alert(JSON.stringify(event));
       globalScannedValue += String.fromCharCode(event.charCode);
     }
   }
