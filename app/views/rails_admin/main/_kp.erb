@@ -37,20 +37,19 @@
       globalScannedValue = "";
       $("#send").click();
     } else {
-      alert("carattereDiverso da 13");
       // Scrivilo nell'input field (accumulando)
-      globalScannedValue += keycode; //String.fromCharCode(event.charCode);
+      globalScannedValue += String.fromCharCode(event.charCode);
     }
   }
 
-  $(document).on("keydown", manageScannedKeystrokes);
+  $(document).on("keypress", manageScannedKeystrokes);
   // Se $("#barcode") si becca il focus, elimino il keypress
   $("#barcode").focusin(function () {
     // Blocco il keypress del document
-    $(document).off("keydown", manageScannedKeystrokes);
+    $(document).off("keypress", manageScannedKeystrokes);
   });
   $("#barcode").focusout(function () {
     // Blocco il keypress del document
-    $(document).on("keydown", manageScannedKeystrokes);
+    $(document).on("keypress", manageScannedKeystrokes);
   });
 </script>
