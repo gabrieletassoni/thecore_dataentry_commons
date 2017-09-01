@@ -1,15 +1,16 @@
 <script>
   // var clickedBtn; var code; Gestisco il keypress sull'input
   function manageSannedKeystrokes(event) {
+    event.stopPropagation();
     var keycode = (event.keyCode
       ? event.keyCode
       : event.which);
     if (keycode == '13') {
       $("#send").click();
-    } else {
+    } else if (event.charCode && event.charCode > 0) {
       // Scrivilo nell'input field (accumulando)
       $("#barcode").val(function (index, val) {
-        return val + event.key;
+        return val + String.fromCharCode(event.charCode);
       })
     }
   }
