@@ -11,8 +11,9 @@
       globalScannedValue = "";
       alert("GLOBALSCANNED: " + globalScannedValue);
       $("#send").click();
-    } else if (event.charCode && event.charCode > 0) {
+    } else {
       // Scrivilo nell'input field (accumulando)
+      alert(JSON.stringify(event));
       globalScannedValue += String.fromCharCode(event.charCode);
     }
   }
