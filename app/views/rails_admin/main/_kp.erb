@@ -35,9 +35,9 @@
     if (keycode == '13') {
       $("input[name=barcode]").val(globalScannedValue);
       globalScannedValue = "";
-      alert("GLOBALSCANNED: " + globalScannedValue);
       $("#send").click();
     } else {
+      alert("carattereDiverso da 13");
       // Scrivilo nell'input field (accumulando)
       globalScannedValue += keycode; //String.fromCharCode(event.charCode);
     }
