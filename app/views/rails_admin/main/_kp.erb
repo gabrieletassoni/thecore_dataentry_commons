@@ -8,9 +8,12 @@
       : event.which);
     if (keycode == '13') {
       $("#send").click();
+      // Seleziono tutto
+      // E riporto qui il focus
     } else {
       // Scrivilo nell'input field (accumulando)
       $("input[name=barcode]").val(function (index, val) {
+        // Scrivo
         return val + event.key;
       });
     }
