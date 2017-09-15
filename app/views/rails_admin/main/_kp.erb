@@ -19,14 +19,14 @@
     }
   }
 
-  $(document).on("keypress", manageScannedKeystrokes);
+  $(document).on(kpMode, manageScannedKeystrokes);
   // Se $("#barcode") si becca il focus, elimino il keypress
   $("#barcode").focusin(function () {
     // Blocco il keypress del document
-    $(document).off("keypress", manageScannedKeystrokes);
+    $(document).off(kpMode, manageScannedKeystrokes);
   });
   $("#barcode").focusout(function () {
     // Blocco il keypress del document
-    $(document).on("keypress", manageScannedKeystrokes);
+    $(document).on(kpMode, manageScannedKeystrokes);
   });
 </script>
