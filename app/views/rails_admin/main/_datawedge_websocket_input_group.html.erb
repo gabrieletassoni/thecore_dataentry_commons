@@ -1,4 +1,4 @@
-<%-if Settings.datawedge_scan_mode == "ws" %>
+<%-if @type == "ws" %>
 <style type="text/css">
   .input-group-addon.primary {
     color: rgb(255, 255, 255);
@@ -32,7 +32,7 @@
 <div class="row">
   <div class="col-lg-12">
     <div class="input-group input-group-lg">
-      <%-if Settings.datawedge_scan_mode == "ws" %>
+      <%-if @type == "ws" %>
       <span id="connection" class="input-group-addon danger">
         <i class='fa fa-plug'></i>
       </span>

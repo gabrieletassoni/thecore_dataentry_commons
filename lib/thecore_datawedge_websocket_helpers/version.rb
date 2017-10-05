@@ -1,3 +1,3 @@
 module ThecoreDatawedgeWebsocketHelpers
-  VERSION = '1.1.25'
+  VERSION = '1.2.7'
 end

@@ -1,0 +1,11 @@
+<!-- Automatically manage kp or ws mode, based on the auto setting and detection of mobile or not browser -->
+<%-@type = "kp"%>
+<%-if Settings.datawedge_scan_mode == "auto"%>
+  <%-Rails.logger.debug "META #{browser.meta.inspect}\n - includes mobile? #{browser.meta.include?("mobile")}\n - includes android? #{browser.meta.include?("android")}"%>
+  <%-if browser.meta.include?("mobile") && browser.meta.include?("android")%>
+    <%-@type = "ws"%>
+  <%-end%>
+<%-else%>
+  <%-@type = Settings.datawedge_scan_mode%>
+<%-end%>
+<%-Rails.logger.debug "Computed type: #{@type}"%>
