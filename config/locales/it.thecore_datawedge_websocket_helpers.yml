@@ -1,0 +1,8 @@
+it:
+  yes: Si
+  no: No
+  error: Errore
+  question: Domanda
+  manual_barcode: Inserimento Manuale
+  send: Invia
+  loading: Caricamento
