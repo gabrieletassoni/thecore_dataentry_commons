@@ -25,11 +25,10 @@
     background-color: rgb(217, 83, 79);
     border-color: rgb(212, 63, 58);
   }
-
 </style>
 <%-end%>
 
-<div class="row">
+<div class="row" id="barcode-container">
   <div class="col-lg-12">
     <div class="input-group input-group-lg">
       <%-if @type == "ws" %>
@@ -59,8 +58,8 @@
   });
 
   function resetCurrentBtn() {
-    $(".btn").button('reset');
-    $(".input-lg").prop('disabled', false);
+    $("#send").button('reset');
+    $("#barcode").prop('disabled', false);
     // sendMessageToServer(msg_input_plugin_enable); clickedBtn = code = null;
   }
 </script>

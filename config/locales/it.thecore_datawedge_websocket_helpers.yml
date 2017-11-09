@@ -1,6 +1,6 @@
 it:
-  yes: Si
-  no: No
+  ask_yes: Si
+  ask_no: No
   error: Errore
   question: Domanda
   manual_barcode: Inserimento Manuale

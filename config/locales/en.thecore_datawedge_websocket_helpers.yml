@@ -1,6 +1,6 @@
 en:
-  yes: Yes
-  no: No
+  ask_yes: Yes
+  ask_no: No
   error: Error
   question: Question
   manual_barcode: Manual input
