@@ -18,15 +18,22 @@
       });
     }
   }
+  function enableKSCapture(){
+    $(document).on(kpMode, manageScannedKeystrokes);
+  }
+  function disableKSCapture(){
+    $(document).off(kpMode, manageScannedKeystrokes);
+  }
 
-  $(document).on(kpMode, manageScannedKeystrokes);
+  // Init
+  enableKSCapture();
   // Se $("#barcode") si becca il focus, elimino il keypress
   $("#barcode").focusin(function () {
     // Blocco il keypress del document
-    $(document).off(kpMode, manageScannedKeystrokes);
+    disableKSCapture();
   });
   $("#barcode").focusout(function () {
     // Blocco il keypress del document
-    $(document).on(kpMode, manageScannedKeystrokes);
+    enableKSCapture();
   });
 </script>
