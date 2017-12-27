@@ -1,0 +1,112 @@
+<%= breadcrumb %>
+
+<%= render "barcode_scan_mode_detection"%>
+<%= render "datawedge_websocket_input_group" %>
+
+<div class="container" style="margin-top: 1em;">
+  <div class="row">
+    <div id="data-info" class="alert alert-warning col-lg-12"></div>
+  </div>
+  <div class="row">
+    <div id="data-content" class="alert alert-warning col-lg-12"></div>
+  </div>
+  <%-unless (hide_action rescue true)%>
+  <div class="row">
+    <button id="data-action" class="btn btn-danger col-lg-12" data-loading-text="<i class='fa fa-spinner fa-spin '></i> <%=t :loading %>"><%=t "barcode.action.name"%></button>
+  </div>
+  <%-end%>
+</div>
+
+<script>
+    var code;
+
+    // These functions can be overridden in the containing file
+    function setAll() {
+        $("#data-info").show();
+        $("#data-content").show();
+        <%-unless (hide_action rescue true)%>
+        $("#data-action").show();
+        <%-end%>
+    }
+
+    function resetInfo() {
+        $("#data-info").empty().hide();
+        $("#data-content").empty().hide();
+        <%-unless (hide_action rescue true)%>
+        $("#data-action").hide();
+        <%-end%>
+    }
+
+    function resetAll() {
+        // Riporto tutto allo stato iniziale
+        resetInfo();
+    }
+
+    function contentHtmlString(data){
+        return data.barcode;
+    }
+
+    function barcodeScannedSuccess(data, status) {
+        return false;
+    }
+
+    function barcodeScannedFailure(errorObj) {
+        // Resetting all to the starting condition
+        resetCurrentBtn();
+        resetInfo();
+        // Showing modal error
+        openModal("<%=t :error %>", errorObj.responseJSON.error);
+    }
+
+    <%-unless (hide_action rescue true)%>
+    function dataActionSuccess(data, status) {
+        return barcodeScannedSuccess(data, status);
+    }
+
+    function dataActionFailure(errorObj) {
+        barcodeScannedFailure(errorObj);
+    }
+    <%-end%>
+    // END of overridable functions
+
+    // Operation on barcode scan
+    $('#send').on('click', function () {
+        code = $('#barcode');
+        code.prop('disabled', true);
+        $(this).button('loading');
+        $.get('<%=rails_admin.send("#{action_name}_path")%>', {
+            barcode: code.val()
+        }, barcodeScannedSuccess || function (data, status) {
+            // Cleaning up
+            $("#data-content").empty().hide();
+            // Setting info already formatted from the controller
+            $("#data-info").html(data.info);
+            // Setting returned content
+            $("#data-content").append(contentHtmlString(data));
+            $("#data-content").switchClass("alert-warning", "alert-success", 800).switchClass("alert-success", "alert-warning",800);
+            setAll();
+            resetCurrentBtn();
+        }).fail(barcodeScannedFailure);
+    });
+
+    <%-unless (hide_action rescue true)%>
+    // Operation on button click
+    $("#data-action").click(function () {
+        code = $('#barcode');
+        code.prop('disabled', true);
+        $(this).button('loading');
+        $.get('<%=rails_admin.send("#{action_name}_path")%>', {
+            barcode: code.val(),
+            action: "data-action"
+        }, dataActionSuccess || function (data, status) {
+            openModal("<%=t :success %>", data.message);
+            setAll();
+            resetCurrentBtn();
+        }).fail(dataActionFailure);
+    <%-end%>
+
+    // Starting with a clean interface
+    resetAll();
+</script>
+
+<%= render "datawedge_websocket_input_group_logic" %>

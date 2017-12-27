@@ -2,7 +2,12 @@ en:
   ask_yes: Yes
   ask_no: Cancel
   error: Error
+  success: Successo
   question: Question
   manual_barcode: Manual input
   send: Send
   loading: Loading
+  barcode:
+    action:
+      name:
+        Send

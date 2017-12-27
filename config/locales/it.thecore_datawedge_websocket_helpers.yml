@@ -2,7 +2,12 @@ it:
   ask_yes: Si
   ask_no: Annulla
   error: Errore
+  success: Successo
   question: Domanda
   manual_barcode: Inserimento Manuale
   send: Invia
   loading: Caricamento
+  barcode:
+    action:
+      name:
+        Invia
