@@ -47,8 +47,18 @@
     }
 
     function barcodeScannedSuccess(data, status) {
-        return false;
+        // Cleaning up
+        $("#data-content").empty().hide();
+        // Setting info already formatted from the controller
+        $("#data-info").html(data.info);
+        // Setting returned content
+        $("#data-content").append(contentHtmlString(data));
+        $("#data-content").switchClass("alert-warning", "alert-success", 800).switchClass("alert-success", "alert-warning",800);
+        setAll();
+        resetCurrentBtn();
     }
+
+    function barcodeScannedThen(){}
 
     function barcodeScannedFailure(errorObj) {
         // Resetting all to the starting condition
@@ -60,8 +70,12 @@
 
     <%-unless (hide_action rescue true)%>
     function dataActionSuccess(data, status) {
-        return barcodeScannedSuccess(data, status);
+        openModal("<%=t :success %>", data.message);
+        setAll();
+        resetCurrentBtn();
     }
+
+    function dataActionThen(){}
 
     function dataActionFailure(errorObj) {
         barcodeScannedFailure(errorObj);
@@ -76,17 +90,7 @@
         $(this).button('loading');
         $.get('<%=rails_admin.send("#{action_name}_path")%>', {
             barcode: code.val()
-        }, barcodeScannedSuccess || function (data, status) {
-            // Cleaning up
-            $("#data-content").empty().hide();
-            // Setting info already formatted from the controller
-            $("#data-info").html(data.info);
-            // Setting returned content
-            $("#data-content").append(contentHtmlString(data));
-            $("#data-content").switchClass("alert-warning", "alert-success", 800).switchClass("alert-success", "alert-warning",800);
-            setAll();
-            resetCurrentBtn();
-        }).fail(barcodeScannedFailure);
+        }, barcodeScannedSuccess).then(barcodeScannedThen).fail(barcodeScannedFailure);
     });
 
     <%-unless (hide_action rescue true)%>
@@ -98,11 +102,8 @@
         $.get('<%=rails_admin.send("#{action_name}_path")%>', {
             barcode: code.val(),
             action: "data-action"
-        }, dataActionSuccess || function (data, status) {
-            openModal("<%=t :success %>", data.message);
-            setAll();
-            resetCurrentBtn();
-        }).fail(dataActionFailure);
+        }, dataActionSuccess).then(dataActionThen).fail(dataActionFailure);
+    });
     <%-end%>
 
     // Starting with a clean interface
