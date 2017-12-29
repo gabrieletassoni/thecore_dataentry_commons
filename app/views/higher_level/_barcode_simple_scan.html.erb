@@ -52,13 +52,14 @@
         // Setting info already formatted from the controller
         $("#data-info").html(data.info);
         // Setting returned content
-        $("#data-content").append(contentHtmlString(data));
+        var appended = contentHtmlString(data).appendTo("#data-content");
         $("#data-content").switchClass("alert-warning", "alert-success", 800).switchClass("alert-success", "alert-warning",800);
         setAll();
         resetCurrentBtn();
+        return appended;
     }
 
-    function barcodeScannedThen(){}
+    function barcodeScannedThen(appended){}
 
     function barcodeScannedFailure(errorObj) {
         // Resetting all to the starting condition
@@ -90,7 +91,7 @@
         $(this).button('loading');
         $.get('<%=rails_admin.send("#{action_name}_path")%>', {
             barcode: code.val()
-        }, barcodeScannedSuccess).then(barcodeScannedThen).fail(barcodeScannedFailure);
+        }).then(barcodeScannedSuccess).done(barcodeScannedThen).fail(barcodeScannedFailure);
     });
 
     <%-unless (hide_action rescue true)%>
@@ -111,3 +112,5 @@
 </script>
 
 <%= render "datawedge_websocket_input_group_logic" %>
+
+<%= render "shared/useful_functions" %>

@@ -1,0 +1,15 @@
+<script>
+    function buildDTPicker(id, label, initialValue){
+      var html = '<div class="input-group date" default-date="'+initialValue+'">';
+      html += '<label class="input-group-addon">'+label+'</label>';
+      html += '<input class="form-control" type="text" name="'+id+'"/>';
+      html += '<label class="input-group-addon"><i class="fa fa-fw fa-calendar"></i></label>';
+      html += '</div>';
+      var jqueryObj = $(html);
+      jqueryObj.datetimepicker({
+        locale: "<%=I18n.locale%>",
+        defaultDate: initialValue
+      });
+      return jqueryObj;
+    }
+</script>
