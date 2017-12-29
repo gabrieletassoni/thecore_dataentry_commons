@@ -19,6 +19,7 @@
 
 <script>
     var code;
+    var returnedData;
 
     // These functions can be overridden in the containing file
     function setAll() {
@@ -47,6 +48,7 @@
     }
 
     function barcodeScannedSuccess(data, status) {
+        returnedData = data;
         // Cleaning up
         $("#data-content").empty().hide();
         // Setting info already formatted from the controller
@@ -74,9 +76,10 @@
         openModal("<%=t :success %>", data.message);
         setAll();
         resetCurrentBtn();
+        return data;
     }
 
-    function dataActionThen(){}
+    function dataActionThen(data){}
 
     function dataActionFailure(errorObj) {
         barcodeScannedFailure(errorObj);
@@ -102,8 +105,9 @@
         $(this).button('loading');
         $.get('<%=rails_admin.send("#{action_name}_path")%>', {
             barcode: code.val(),
-            action: "data-action"
-        }, dataActionSuccess).then(dataActionThen).fail(dataActionFailure);
+            action: "data-action",
+            data: returnedData
+        }).then(dataActionSuccess).done(dataActionThen).fail(dataActionFailure);
     });
     <%-end%>
 
