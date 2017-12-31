@@ -1,7 +1,7 @@
-module ThecoreDatawedgeWebsocketHelpers
+module ThecoreDataentryCommons
   class Engine < ::Rails::Engine
 
-    initializer 'chs_models.add_to_migrations' do |app|
+    initializer 'thecore_dataentry_commons.add_to_migrations' do |app|
       unless app.root.to_s == root.to_s
         # APPEND TO MAIN APP MIGRATIONS FROM THIS GEM
         config.paths['db/migrate'].expanded.each do |expanded_path|
