@@ -5,6 +5,7 @@ it:
   success: Successo
   question: Domanda
   manual_barcode: Inserimento Manuale
+  barcode_cannot_be_empty: Il codice a barre letto non può essere vuoto
   send: Invia
   loading: Caricamento
   barcode:

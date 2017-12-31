@@ -1,16 +1,30 @@
 <script>
-  // var clickedBtn; var code; Gestisco il keypress sull'input
-  function manageScannedKeystrokes(event) {
-    // alert("Non credo vada");
-    // alert("Ciao: " + DumpObject(event));
-    var keycode = (event.keyCode
-      ? event.keyCode
-      : event.which);
+  function keypressAndReturn(event) {
+    // Capture all the keypresses and if they are a return, 
+    // then "click" the send button
+    event.stopPropagation();
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    //console.log(keycode);
     if (keycode == '13') {
       $("#send").click();
-      // Seleziono tutto
-      // E riporto qui il focus
-    } else {
+      return true;
+    }
+    return false;
+  }
+  var kpMode = "<%= Settings.datawedge_kp_mode %>";
+  // var clickedBtn; var code; Gestisco il keypress sull'input
+  $("input[name=barcode]").on(kpMode, keypressAndReturn);
+
+  function resetCurrentBtn() {
+    $("#send").button('reset');
+    $("#barcode").prop('disabled', false);
+    $("#barcode").val('');
+    // sendMessageToServer(msg_input_plugin_enable); clickedBtn = code = null;
+  }
+  // var clickedBtn; var code; Gestisco il keypress sull'input
+  function manageScannedKeystrokes(event) {
+    if(!keypressAndReturn(event)) {
+      $("#send").focus();
       // Scrivilo nell'input field (accumulando)
       $("input[name=barcode]").val(function (index, val) {
         // Scrivo
@@ -36,4 +50,5 @@
     // Blocco il keypress del document
     enableKSCapture();
   });
+  $("#send").focus();
 </script>

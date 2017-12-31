@@ -31,16 +31,13 @@
     }
 
     function resetInfo() {
+        returnedData = code = undefined;
+        $("#barcode").empty();
         $("#data-info").empty().hide();
         $("#data-content").empty().hide();
         <%-unless (hide_action rescue true)%>
         $("#data-action").hide();
         <%-end%>
-    }
-
-    function resetAll() {
-        // Riporto tutto allo stato iniziale
-        resetInfo();
     }
 
     function contentHtmlString(data){
@@ -55,7 +52,7 @@
         $("#data-info").html(data.info);
         // Setting returned content
         var appended = contentHtmlString(data).appendTo("#data-content");
-        $("#data-content").switchClass("alert-warning", "alert-success", 800).switchClass("alert-success", "alert-warning",800);
+        // $("#data-content").switchClass("alert-warning", "alert-success", 800).switchClass("alert-success", "alert-warning",800);
         setAll();
         resetCurrentBtn();
         return appended;
@@ -112,9 +109,7 @@
     <%-end%>
 
     // Starting with a clean interface
-    resetAll();
+    resetInfo();
 </script>
 
 <%= render "datawedge_websocket_input_group_logic" %>
-
-<%= render "shared/useful_functions" %>

@@ -5,6 +5,7 @@ en:
   success: Successo
   question: Question
   manual_barcode: Manual input
+  barcode_cannot_be_empty: Barcode cannot be empty
   send: Send
   loading: Loading
   barcode:

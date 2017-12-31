@@ -43,23 +43,3 @@
     </div>
   </div>
 </div>
-
-<script>
-  var kpMode = "<%= Settings.datawedge_kp_mode %>";
-  // var clickedBtn; var code; Gestisco il keypress sull'input
-  $("input[name=barcode]").on(kpMode, function (event) {
-    event.stopPropagation();
-    var keycode = (event.keyCode
-      ? event.keyCode
-      : event.which);
-    if (keycode == '13') {
-      $("#send").click();
-    }
-  });
-
-  function resetCurrentBtn() {
-    $("#send").button('reset');
-    $("#barcode").prop('disabled', false);
-    // sendMessageToServer(msg_input_plugin_enable); clickedBtn = code = null;
-  }
-</script>
