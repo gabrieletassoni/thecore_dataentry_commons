@@ -1,12 +1,12 @@
 $:.push File.expand_path("../lib", __FILE__)
 
 # Maintain your gem's version:
-require "thecore_datawedge_websocket_helpers/version"
+require "thecore_dataentry_commons/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "thecore_datawedge_websocket_helpers"
-  s.version     = ThecoreDatawedgeWebsocketHelpers::VERSION
+  s.name        = "thecore_dataentry_commons"
+  s.version     = ThecoreDataentryCommons::VERSION
   s.authors     = ["Gabriele Tassoni"]
   s.email       = ["gabriele.tassoni@gmail.com"]
   s.homepage    = "https://www.taris.it"
