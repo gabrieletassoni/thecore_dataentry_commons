@@ -48,6 +48,10 @@
 
   // $("#send").focus();
   // Init
+  // Disabling any previously defined keypress event
+  $(document).off(kpMode);
+  $("#barcode").off(kpMode);
+  // Enabling keypress event only for this page
   enableKSCapture();
   // Se $("#barcode") si becca il focus, elimino il keypress
   $("#barcode").focusin(function () {
