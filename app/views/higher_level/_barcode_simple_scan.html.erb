@@ -54,6 +54,7 @@
         var appended = contentHtmlString(data).appendTo("#data-content");
         // $("#data-content").switchClass("alert-warning", "alert-success", 800).switchClass("alert-success", "alert-warning",800);
         setAll();
+        $("#data-action").focus();
         resetCurrentBtn();
         return appended;
     }
@@ -102,7 +103,7 @@
         $(this).button('loading');
         $.get('<%=rails_admin.send("#{action_name}_path")%>', {
             barcode: code.val(),
-            action: "data-action",
+            what_to_do: "data-action",
             data: returnedData
         }).then(dataActionSuccess).done(dataActionThen).fail(dataActionFailure);
     });
