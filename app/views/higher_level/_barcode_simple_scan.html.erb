@@ -41,7 +41,7 @@
     }
 
     function contentHtmlString(data){
-        return data.barcode;
+        return $("<span>" + data.barcode + "</span>");
     }
 
     function barcodeScannedSuccess(data, status) {
