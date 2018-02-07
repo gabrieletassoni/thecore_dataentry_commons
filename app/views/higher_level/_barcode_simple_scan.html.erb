@@ -82,6 +82,10 @@
     function dataActionFailure(errorObj) {
         barcodeScannedFailure(errorObj);
     }
+
+    function dataActionAlways(){
+        $("#data-action").button('reset');
+    }
     <%-end%>
     // END of overridable functions
 
@@ -105,7 +109,7 @@
             barcode: code.val(),
             what_to_do: "data-action",
             data: returnedData
-        }).then(dataActionSuccess).done(dataActionThen).fail(dataActionFailure);
+        }).then(dataActionSuccess).done(dataActionThen).fail(dataActionFailure).always(dataActionAlways);
     });
     <%-end%>
 
