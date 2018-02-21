@@ -1,3 +1,3 @@
 module ThecoreDataentryCommons
-  VERSION = '1.2.25'.freeze
+  VERSION = '1.2.27'.freeze
 end

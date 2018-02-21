@@ -1,4 +1,8 @@
 it:
+  settings:
+    names:
+      datawedge_scan_mode: Modalità di Scansione (auto, kp, ws)
+      datawedge_kp_mode: Modalità di Emulazione Tastiera (keypress, keyup, keydown)
   ask_yes: Si
   ask_no: Annulla
   error: Errore

@@ -1,4 +1,8 @@
 en:
+  settings:
+    names:
+      datawedge_scan_mode: Scan Mode (auto, kp, ws)
+      datawedge_kp_mode: Keyboard Emulator Mode (keypress, keyup, keydown)
   ask_yes: Yes
   ask_no: Cancel
   error: Error
