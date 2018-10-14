@@ -18,7 +18,7 @@ $ bundle
 
 Or install it yourself as:
 ```bash
-$ gem install thecore_datawedge_websocket_helpers
+$ gem install thecore_dataentry_commons
 ```
 
 ## Contributing
