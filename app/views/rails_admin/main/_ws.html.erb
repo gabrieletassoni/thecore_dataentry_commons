@@ -27,7 +27,7 @@
 
   var barcodeScanRegExp = /Barcode \((.*)\) \[(.*)\]/;
 
-  function init() {
+  function thecoreWsInit() {
     ws = new WebSocket("ws://" + address + ":" + port + "/");
     ws.onmessage = function (event) {
       // event.data ha forma: Barcode (8273878337383) [LABEL-TYPE-EAN13]
@@ -68,7 +68,7 @@
   function tryInit() {
     // Solo se la socket è chiusa e siamo in ambiente android
     if (socketClosed) {
-      init();
+      thecoreWsInit();
     }
   }
   // Creating the websocket
