@@ -88,14 +88,19 @@
     // END of overridable functions
 
     // Operation on barcode scan
-    $('#send').on('click', function () {
+    function sendFunction() {
         code = $('#barcode');
         code.prop('disabled', true);
         $(this).button('loading');
         $.get('<%=rails_admin.send("#{action_name}_path")%>', {
             barcode: code.val()
         }).then(barcodeScannedSuccess).done(barcodeScannedThen).fail(barcodeScannedFailure);
-    });
+    }
+    <%-unless (start_disabled rescue false)%>
+    $('#send').on('click', sendFunction);
+    <%-else%>
+    $('#send').off('click', sendFunction);
+    <%-end%>
 
     <%-unless (hide_action rescue true)%>
     // Operation on button click
