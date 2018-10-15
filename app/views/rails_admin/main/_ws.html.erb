@@ -71,10 +71,17 @@
       thecoreWsInit();
     }
   }
+  var isAndroid;
   // Creating the websocket
-  var ua = navigator.userAgent.toLowerCase();
-  var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
-  if (isAndroid) {
-    setInterval(tryInit, 1500);
+  function startWS() {
+    var ua = navigator.userAgent.toLowerCase();
+    isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
+    if (isAndroid) {
+      setInterval(tryInit, 1500);
+    }
   }
+
+  <%-unless (start_disabled rescue false)%>
+  startWS();
+  <%-end%>
 </script>

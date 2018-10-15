@@ -102,12 +102,6 @@
     $('#send').on('click', sendFunction);
     <%-else%>
     $('#send').off('click', sendFunction);
-    <%-if @type == "ks"%>
-        disableKSCapture();
-    <%-else%>
-    if ws
-        ws.close();
-    <%-end%>
     <%-end%>
 
     <%-unless (hide_action rescue true)%>

@@ -53,7 +53,11 @@
   $("#barcode").off(kpMode);
   $("#barcode").focus();
   // Enabling keypress event only for this page
+  <%-unless (start_disabled rescue false)%>
+  disableKSCapture();
+  <%-else%>
   enableKSCapture();
+  <%-end%>
   // Se $("#barcode") si becca il focus, elimino il keypress
   $("#barcode").focusin(function () {
     // Blocco il keypress del document
