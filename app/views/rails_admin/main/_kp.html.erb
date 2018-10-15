@@ -46,6 +46,13 @@
     $("#barcode").on(kpMode, manageScannedKeystrokes);
   }
 
+  function startKSCapture() {
+    enableKSCapture();
+    // Se $("#barcode") si becca il focus, elimino il keypress
+    $("#barcode").focusin(disableKSCapture);
+    $("#barcode").focusout(enableKSCapture);
+  }
+
   // $("#send").focus();
   // Init
   // Disabling any previously defined keypress event
@@ -56,15 +63,6 @@
   <%-unless (start_disabled rescue false)%>
   disableKSCapture();
   <%-else%>
-  enableKSCapture();
+  startKSCapture();
   <%-end%>
-  // Se $("#barcode") si becca il focus, elimino il keypress
-  $("#barcode").focusin(function () {
-    // Blocco il keypress del document
-    disableKSCapture();
-  });
-  $("#barcode").focusout(function () {
-    // Blocco il keypress del document
-    enableKSCapture();
-  });
 </script>
