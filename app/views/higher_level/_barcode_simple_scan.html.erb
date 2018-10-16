@@ -98,10 +98,10 @@
             parameters: additionalData
         }).then(barcodeScannedSuccess).done(barcodeScannedThen).fail(barcodeScannedFailure);
     }
-    <%-unless (start_disabled rescue false)%>
-    $('#send').on('click', sendFunction);
-    <%-else%>
+    <%-if (start_disabled rescue false)%>
     $('#send').off('click', sendFunction);
+    <%-else%>
+    $('#send').on('click', sendFunction);
     <%-end%>
 
     <%-unless (hide_action rescue true)%>

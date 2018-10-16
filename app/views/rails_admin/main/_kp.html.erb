@@ -38,11 +38,15 @@
     }
   }
   function enableKSCapture(){
+    console.log("Enabling keypress capture");
+    $(document).off(kpMode, manageScannedKeystrokes);
     $(document).on(kpMode, manageScannedKeystrokes);
     $("#barcode").off(kpMode, manageScannedKeystrokes);
   }
   function disableKSCapture(){
+    console.log("Disabling keypress capture");
     $(document).off(kpMode, manageScannedKeystrokes);
+    $("#barcode").off(kpMode, manageScannedKeystrokes);
     $("#barcode").on(kpMode, manageScannedKeystrokes);
   }
 
@@ -60,9 +64,9 @@
   $("#barcode").off(kpMode);
   $("#barcode").focus();
   // Enabling keypress event only for this page
-  <%-unless (start_disabled rescue false)%>
-  startKSCapture();
-  <%-else%>
+  <%-if (start_disabled rescue false)%>
   disableKSCapture();
+  <%-else%>
+  startKSCapture();
   <%-end%>
 </script>

@@ -81,7 +81,10 @@
     }
   }
 
-  <%-unless (start_disabled rescue false)%>
+  <%-if (start_disabled rescue false)%>
+  // Do nothing, if start is disabled is true, don't print anything.
+  // If it's not defined, it must default to starting websocket()
+  <%-else%>
   startWS();
   <%-end%>
 </script>
