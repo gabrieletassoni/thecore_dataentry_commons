@@ -1,1 +1,1 @@
-<%=render(@type) rescue render("kp")%>
+<%=render (@type.presence || "kp"), start_disabled: (start_disabled rescue false) %>

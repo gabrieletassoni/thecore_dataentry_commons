@@ -1,4 +1,4 @@
-<%= render "barcode_scan_mode_detection"%>
+<%= render "barcode_scan_mode_detection", start_disabled: (start_disabled rescue false) %>
 <%= render "dataentry_commons_input_group" %>
 
 <div class="container" style="margin-top: 1em;">
@@ -123,4 +123,4 @@
     resetInfo();
 </script>
 
-<%= render "dataentry_commons_input_group_logic" %>
+<%= render "dataentry_commons_input_group_logic", start_disabled: (start_disabled rescue false) %>
