@@ -1,16 +1,14 @@
 <script>
-  function keypressAndReturn(event) {
-    // Capture all the keypresses and if they are a return, 
-    // then "click" the send button
-    event.stopPropagation();
-    var keycode = (event.keyCode ? event.keyCode : event.which);
-    // console.log(keycode);
-    if (keycode == '13') {
-      $("#send").click();
-      return true;
-    }
-    return false;
-  }
+  // function keypressAndReturn(event) {
+  //   // Capture all the keypresses and if they are a return, 
+  //   // then "click" the send button
+  //   var keycode = (event.keyCode ? event.keyCode : event.which);
+  //   if (keycode == '13') {
+  //     $("#send").click();
+  //     return true;
+  //   }
+  //   return false;
+  // }
   var kpMode = "<%= Settings.datawedge_kp_mode %>";
   // var clickedBtn; var code; Gestisco il keypress sull'input
   // $("#barcode").on(kpMode, keypressAndReturn);
@@ -23,39 +21,61 @@
   }
   // var clickedBtn; var code; Gestisco il keypress sull'input
   function manageScannedKeystrokes(event) {
-    // console.log(event);
-    event.stopPropagation();
-    if(!keypressAndReturn(event)) {
-      // $("#send").focus();
+    const keycode = (event.keyCode ? event.keyCode : event.which);
+    const valid = !event.ctrlKey && !event.altKey && 
+      ((keycode > 47 && keycode < 58) || // number keys
+        keycode == 32 || // spacebar
+        (keycode > 64 && keycode < 91)   || // letter keys
+        (keycode > 95 && keycode < 112)  || // numpad keys
+        (keycode > 185 && keycode < 193) || // ;=,-./` (in order)
+        (keycode > 218 && keycode < 223));   // [\]' (in order)
+    let prevent = false;
+    if (event.ctrlKey && keycode == '32') {
+      // Invia il form secondario
+      console.log("Send secondary form");
+      $("#data-action").click();
+      prevent = true;
+      //return true;
+    } else if (keycode == '13') {
+      // Invia il form principale
+      console.log("Send main form");
+      $("#send").click();
+      prevent = true;
+    } else if (valid) { // if (event.target.id != "barcode")
       // Scrivilo nell'input field (accumulando)
-      // Only if target.id is different from "barcode"
-      // Otherwise well get duplicate keystrokes
-      if(event.target.id != "barcode")
+      console.log("Write to the field");
       $("#barcode").val(function (index, val) {
         // Write
         return val + event.key;
       });
+      prevent = true;
+    }
+    
+    if (prevent) {
+      event.stopPropagation();
+      event.preventDefault();
     }
   }
-  function enableKSCapture(){
-    console.log("Enabling keypress capture");
-    $(document).off(kpMode, manageScannedKeystrokes);
-    $(document).on(kpMode, manageScannedKeystrokes);
-    $("#barcode").off(kpMode, manageScannedKeystrokes);
-  }
-  function disableKSCapture(){
-    console.log("Disabling keypress capture");
-    $(document).off(kpMode, manageScannedKeystrokes);
-    $("#barcode").off(kpMode, manageScannedKeystrokes);
-    $("#barcode").on(kpMode, manageScannedKeystrokes);
-  }
 
-  function startKSCapture() {
-    enableKSCapture();
-    // Se $("#barcode") si becca il focus, elimino il keypress
-    $("#barcode").focusin(disableKSCapture);
-    $("#barcode").focusout(enableKSCapture);
-  }
+  // function enableKSCapture(){
+  //   console.log("Enabling keypress capture");
+  //   $(document).off(kpMode, manageScannedKeystrokes);
+  //   $(document).on(kpMode, manageScannedKeystrokes);
+  //   $("#barcode").off(kpMode, manageScannedKeystrokes);
+  // }
+  // function disableKSCapture(){
+  //   console.log("Disabling keypress capture");
+  //   $(document).off(kpMode, manageScannedKeystrokes);
+  //   $("#barcode").off(kpMode, manageScannedKeystrokes);
+  //   $("#barcode").on(kpMode, manageScannedKeystrokes);
+  // }
+
+  // function startKSCapture() {
+  //   enableKSCapture();
+  //   // Se $("#barcode") si becca il focus, elimino il keypress
+  //   // $("#barcode").focusin(disableKSCapture);
+  //   // $("#barcode").focusout(enableKSCapture);
+  // }
 
   // $("#send").focus();
   // Init
@@ -67,6 +87,7 @@
   <%-if (start_disabled rescue false)%>
   disableKSCapture();
   <%-else%>
-  startKSCapture();
+  $(window).on('keydown', manageScannedKeystrokes);
+  // startKSCapture();
   <%-end%>
 </script>

@@ -16,4 +16,4 @@ en:
   barcode:
     action:
       name:
-        Send (space)
+        Send (CTRL + space)

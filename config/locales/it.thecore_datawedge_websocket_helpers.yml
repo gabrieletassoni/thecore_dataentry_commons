@@ -16,4 +16,4 @@ it:
   barcode:
     action:
       name:
-        Invia (spazio)
+        Invia (CTRL + spazio)
