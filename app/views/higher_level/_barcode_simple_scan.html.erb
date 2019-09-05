@@ -53,7 +53,13 @@
         resetCurrentBtn();
         resetInfo();
         // Showing modal error
-        openModal("<%=t :error %>", errorObj.responseJSON.error);
+        var primary = null
+        var secondary = null
+        if (errorObj.responseJSON.primary_btn)
+            primary = window[errorObj.responseJSON.primary_btn];
+        if (errorObj.responseJSON.secondary_btn)
+            secondary = window[errorObj.responseJSON.secondary_btn];
+        openModal("<%=t :error %>", errorObj.responseJSON.error, primary, secondary);
     }
 
     <%-unless (hide_action rescue true)%>
