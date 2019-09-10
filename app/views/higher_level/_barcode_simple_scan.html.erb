@@ -8,6 +8,16 @@
     var returnedData;
     var additionalData = {};
 
+    function resetInfo() {
+        returnedData = code = undefined;
+        $("#barcode").empty();
+        $("#data-info").empty().hide();
+        $("#data-content").empty().hide();
+        <%-unless (hide_action rescue true)%>
+        $("#data-action").hide();
+        <%-end%>
+    }
+
     // These functions can be overridden in the containing file
     function setAll() {
         $("#data-info").show();
@@ -17,14 +27,10 @@
         <%-end%>
     }
 
-    function resetInfo() {
-        returnedData = code = undefined;
-        $("#barcode").empty();
-        $("#data-info").empty().hide();
-        $("#data-content").empty().hide();
-        <%-unless (hide_action rescue true)%>
-        $("#data-action").hide();
-        <%-end%>
+    function resetAll() {
+        // Resetting all to the starting condition
+        resetCurrentBtn();
+        resetInfo();
     }
 
     function contentHtmlString(data){
@@ -49,9 +55,7 @@
     function barcodeScannedThen(appended){}
 
     function barcodeScannedFailure(errorObj) {
-        // Resetting all to the starting condition
-        resetCurrentBtn();
-        resetInfo();
+        returnedData = errorObj.responseJSON;
         // Showing modal error
         var primary = null
         var secondary = null
@@ -60,6 +64,8 @@
         if (errorObj.responseJSON.secondary_btn)
             secondary = window[errorObj.responseJSON.secondary_btn];
         openModal("<%=t :error %>", errorObj.responseJSON.error, primary, secondary);
+        if(!primary && !secondary)
+            resetAll();
     }
 
     <%-unless (hide_action rescue true)%>
@@ -100,7 +106,7 @@
 
     <%-unless (hide_action rescue true)%>
     // Operation on button click
-    $("#data-action").click(function () {
+    function dataActionRun() {
         code = $('#barcode');
         code.prop('disabled', true);
         $(this).button('loading');
@@ -110,7 +116,8 @@
             what_to_do: "data-action",
             data: returnedData
         }).then(dataActionSuccess).done(dataActionThen).fail(dataActionFailure).always(dataActionAlways);
-    });
+    }
+    $("#data-action").click(dataActionRun);
     <%-end%>
 
     // Starting with a clean interface
