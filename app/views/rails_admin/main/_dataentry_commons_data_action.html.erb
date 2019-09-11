@@ -1,0 +1,54 @@
+<script>
+var dataAction = {
+
+    success: function(data, status) {
+        openModal('<%=t :success %>', data.message || data.info);
+        setAll();
+        resetCurrentBtn();
+        return data;
+    },
+
+    then: function(data) {},
+
+    failure: function(errorObj) {
+        barcodeScannedFailure(errorObj);
+    },
+
+    always: function () {
+        $("#data-action").button('reset');
+        dataAction.dispose();
+    },
+    // Operation on button click
+    before: function() {},
+
+    run: function() {
+        code = $('#barcode');
+        code.prop('disabled', true);
+        $(this).button('loading');
+        this.before();
+        $.get('<%=rails_admin.send("#{action_name}_path")%>', {
+            barcode: code.val(),
+            parameters: additionalData,
+            what_to_do: "data-action",
+            data: returnedData
+        }).then(this.success).done(this.then).fail(this.failure).always(this.always);
+    },
+    
+    init: function() {
+        $(window).off('keydown', manageScannedKeystrokes);
+        let dataActionHtml = $([
+            '<div class="row" id="data-action-container">',
+            '   <button id="data-action" onclick="dataAction.run(); return false;" class="btn btn-danger col-lg-12" data-loading-text="<i class=\'fa fa-spinner fa-spin \'></i> <%=t :loading %>"><%=t "barcode.action.name"%></button>',
+            '</div>'
+        ].join("\n"));
+        $("#info-container").append(dataActionHtml);
+        // $("#data-action").click(dataAction.run);
+    },
+
+    dispose: function() {
+        $("#data-action-container").remove();
+        $(window).off('keydown');
+        $(window).on('keydown', manageScannedKeystrokes);
+    }
+}
+</script>

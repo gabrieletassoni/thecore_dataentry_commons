@@ -3,10 +3,12 @@
 
 <%= render "dataentry_commons_data_container", hide_action: (hide_action rescue true)%>
 
+<%= render "dataentry_commons_data_action" %>
 <script>
     var code;
     var returnedData;
     var additionalData = {};
+    var disableKeyManagement = false;
 
     function resetInfo() {
         returnedData = code = undefined;
@@ -39,6 +41,8 @@
 
     function barcodeScannedSuccess(data, status) {
         returnedData = data;
+        if(disableKeyManagement)
+            $(window).off('keydown');
         // Cleaning up
         $("#data-content").empty().hide();
         // Setting info already formatted from the controller
@@ -69,22 +73,7 @@
     }
 
     <%-unless (hide_action rescue true)%>
-    function dataActionSuccess(data, status) {
-        openModal("<%=t :success %>", data.message);
-        setAll();
-        resetCurrentBtn();
-        return data;
-    }
-
-    function dataActionThen(data){}
-
-    function dataActionFailure(errorObj) {
-        barcodeScannedFailure(errorObj);
-    }
-
-    function dataActionAlways(){
-        $("#data-action").button('reset');
-    }
+    dataAction.init();
     <%-end%>
     // END of overridable functions
 
@@ -98,26 +87,11 @@
             parameters: additionalData
         }).then(barcodeScannedSuccess).done(barcodeScannedThen).fail(barcodeScannedFailure);
     }
+
     <%-if (start_disabled rescue false)%>
     $('#send').off('click', sendFunction);
     <%-else%>
     $('#send').on('click', sendFunction);
-    <%-end%>
-
-    <%-unless (hide_action rescue true)%>
-    // Operation on button click
-    function dataActionRun() {
-        code = $('#barcode');
-        code.prop('disabled', true);
-        $(this).button('loading');
-        $.get('<%=rails_admin.send("#{action_name}_path")%>', {
-            barcode: code.val(),
-            parameters: additionalData,
-            what_to_do: "data-action",
-            data: returnedData
-        }).then(dataActionSuccess).done(dataActionThen).fail(dataActionFailure).always(dataActionAlways);
-    }
-    $("#data-action").click(dataActionRun);
     <%-end%>
 
     // Starting with a clean interface
