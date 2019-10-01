@@ -13,12 +13,6 @@
   // var clickedBtn; var code; Gestisco il keypress sull'input
   // $("#barcode").on(kpMode, keypressAndReturn);
 
-  function resetCurrentBtn() {
-    $("#send").button('reset');
-    $("#barcode").prop('disabled', false);
-    $("#barcode").val('');
-    // sendMessageToServer(msg_input_plugin_enable); clickedBtn = code = null;
-  }
   // var clickedBtn; var code; Gestisco il keypress sull'input
   function manageScannedKeystrokes(event) {
     const keycode = (event.keyCode ? event.keyCode : event.which);

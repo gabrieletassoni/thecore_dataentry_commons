@@ -1,1 +1,9 @@
+<script>
+  function resetCurrentBtn() {
+    $("#send").button('reset');
+    $("#barcode").prop('disabled', false);
+    $("#barcode").val('');
+    // sendMessageToServer(msg_input_plugin_enable); clickedBtn = code = null;
+  }
+</script>
 <%=render (@type.presence || "kp"), start_disabled: (start_disabled rescue false) %>
