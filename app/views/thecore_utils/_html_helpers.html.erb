@@ -1,0 +1,65 @@
+<script>
+  function buildDTPicker(id, label, initialValue, ro, date_only){
+    var html = '<div class="input-group date" default-date="'+initialValue+'">';
+      html += '<label class="input-group-addon">'+label+'</label>';
+      html += '<input class="form-control" type="text" readonly/>';
+      html += '<label class="input-group-addon"><i class="fa fa-fw fa-calendar"></i></label>';
+      html += '</div>';
+      var jqueryObj = $(html);
+      var dtParams = {
+        locale: "<%=I18n.locale%>",
+        defaultDate: initialValue,
+        ignoreReadonly: !ro,
+        allowInputToggle: true,
+        sideBySide: true,
+        icons: {
+          time: 'fa fa-clock',
+          date: 'fa fa-calendar',
+          up: 'fa fa-chevron-up',
+          down: 'fa fa-chevron-down',
+          previous: 'fa fa-chevron-left',
+          next: 'fa fa-chevron-right',
+          today: 'fa fa-calendar-check',
+          clear: 'fa fa-trash',
+          close: 'fa fa-times'
+        }
+      }
+      if(date_only)
+        dtParams.format = "L";
+      jqueryObj.datetimepicker(dtParams).on('dp.change', function (e){
+        returnedData[id.replace(/-/g, '_')] = e.date.format();
+        $(this).datetimepicker('hide');
+      });
+      return jqueryObj;
+  }
+
+  function buildDatePicker(id, initialValue) {
+    var html = '<div class="input-group date" id="' + id + '">';
+    html += '<input type="text" class="form-control" />';
+    html += '<label class="input-group-addon"><i class="fa fa-fw fa-calendar"></i></label>';
+    html += '</div>';
+    var jqueryObj = $(html);
+    var dtParams = {
+      locale: "<%=I18n.locale%>",
+      defaultDate: initialValue,
+      allowInputToggle: true,
+      format: 'L',
+      icons: {
+        time: 'fa fa-clock',
+        date: 'fa fa-calendar',
+        up: 'fa fa-chevron-up',
+        down: 'fa fa-chevron-down',
+        previous: 'fa fa-chevron-left',
+        next: 'fa fa-chevron-right',
+        today: 'fa fa-calendar-check',
+        clear: 'fa fa-trash',
+        close: 'fa fa-times'
+      }
+    }
+    jqueryObj.datetimepicker(dtParams).on('dp.change', function (e){
+      $(this).datetimepicker('hide');
+      //returnedData[id.replace(/-/g, '_')] = e.date.format();
+    });
+    return jqueryObj;
+  }
+</script>
