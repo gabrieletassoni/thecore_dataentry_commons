@@ -2,7 +2,7 @@
   function resetCurrentBtn() {
     $("#send").button('reset');
     $("#barcode").prop('disabled', false);
-    $("#barcode").val('');
+    if (cleanBarcode) $("#barcode").empty();
     // sendMessageToServer(msg_input_plugin_enable); clickedBtn = code = null;
   }
 </script>

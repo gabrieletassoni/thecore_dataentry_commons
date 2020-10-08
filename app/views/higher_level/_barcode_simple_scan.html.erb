@@ -13,7 +13,6 @@
 
     function resetInfo() {
         returnedData = code = undefined;
-        if (cleanBarcode) $("#barcode").empty();
         $("#data-info").empty().hide();
         $("#data-content").empty().hide();
         <%-unless (hide_action rescue true)%>
