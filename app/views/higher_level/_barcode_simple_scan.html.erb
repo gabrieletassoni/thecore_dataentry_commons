@@ -9,10 +9,11 @@
     var returnedData;
     var additionalData = {};
     var disableKeyManagement = false;
+    var cleanBarcode = true;
 
     function resetInfo() {
         returnedData = code = undefined;
-        $("#barcode").empty();
+        if (cleanBarcode) $("#barcode").empty();
         $("#data-info").empty().hide();
         $("#data-content").empty().hide();
         <%-unless (hide_action rescue true)%>
