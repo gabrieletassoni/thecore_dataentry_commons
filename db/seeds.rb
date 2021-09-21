@@ -1,5 +1,5 @@
 puts "Loading ThecoreDataentryCommons seeds"
-Settings.datawedge_kp_mode = "keypress"
+Thecore::Seed.save_setting :main, :datawedge_kp_mode , "keypress"
 # ws: WebSocket
 # kp: KeyPress
-Settings.datawedge_scan_mode = "auto" # or "kp"
+Thecore::Seed.save_setting :main, :datawedge_scan_mode , "auto" # or "kp"
