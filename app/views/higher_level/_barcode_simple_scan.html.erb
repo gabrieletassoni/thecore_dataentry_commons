@@ -71,10 +71,6 @@
         if(!primary && !secondary)
             resetAll();
     }
-
-    <%-unless (hide_action rescue true)%>
-    dataAction.init();
-    <%-end%>
     // END of overridable functions
 
     // Operation on barcode scan
@@ -88,14 +84,20 @@
         }).then(barcodeScannedSuccess).done(barcodeScannedThen).fail(barcodeScannedFailure);
     }
 
-    <%-if (start_disabled rescue false)%>
-    $('#send').off('click', sendFunction);
-    <%-else%>
-    $('#send').on('click', sendFunction);
-    <%-end%>
+    document.addEventListener("turbo:load", function (event) {
+        console.log("Inside Barcode Simple Scan Debug");
+        <%-unless (hide_action rescue true)%>
+        dataAction.init();
+        <%-end%>
+        <%-if (start_disabled rescue false)%>
+        $('#send').off('click', sendFunction);
+        <%-else%>
+        $('#send').on('click', sendFunction);
+        <%-end%>
 
-    // Starting with a clean interface
-    resetInfo();
+        // Starting with a clean interface
+        resetInfo();
+    });
 </script>
 
 <%= render "dataentry_commons_input_group_logic", start_disabled: (start_disabled rescue false) %>

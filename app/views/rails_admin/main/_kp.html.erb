@@ -75,15 +75,18 @@
   // $("#send").focus();
   // Init
   // Disabling any previously defined keypress event
-  $(window).off('keydown');
-  $(document).off(kpMode);
-  $("#barcode").off(kpMode);
-  $("#barcode").focus();
-  // Enabling keypress event only for this page
-  <%-if (start_disabled rescue false)%>
-  // disableKSCapture();
-  <%-else%>
-  $(window).on('keydown', manageScannedKeystrokes);
-  // startKSCapture();
-  <%-end%>
+  document.addEventListener("turbo:load", function (event) {
+    console.log("Inside KP Debug");
+    $(window).off('keydown');
+    $(document).off(kpMode);
+    $("#barcode").off(kpMode);
+    $("#barcode").focus();
+    // Enabling keypress event only for this page
+    <%-if (start_disabled rescue false)%>
+    // disableKSCapture();
+    <%-else%>
+    $(window).on('keydown', manageScannedKeystrokes);
+    // startKSCapture();
+    <%-end%>
+  });
 </script>

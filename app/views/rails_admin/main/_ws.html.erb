@@ -41,11 +41,11 @@
     };
     //  In production you would want this to be resiliant against the server being killed by Android, by the user navigating between pages or any other unexpected error related to connection.
     ws.onclose = function () {
-      setSocketStatus("success", "danger");
+      setSocketStatus("bg-success", "bg-danger");
       socketClosed = true;
     };
     ws.onopen = function () {
-      setSocketStatus("danger", "success");
+      setSocketStatus("bg-danger", "bg-success");
       socketClosed = false;
     };
     ws.onerror = function (event) {
@@ -81,10 +81,13 @@
     }
   }
 
-  <%-if (start_disabled rescue false)%>
-  // Do nothing, if start is disabled is true, don't print anything.
-  // If it's not defined, it must default to starting websocket()
-  <%-else%>
-  startWS();
-  <%-end%>
+  document.addEventListener("turbo:load", function (event) {
+      console.log("Inside WS Debug");
+      <%-if (start_disabled rescue false)%>
+      // Do nothing, if start is disabled is true, don't print anything.
+      // If it's not defined, it must default to starting websocket()
+      <%-else%>
+      startWS();
+      <%-end%>
+  });
 </script>
