@@ -6,7 +6,7 @@ en:
   ask_yes: Yes
   ask_no: Cancel
   error: Error
-  success: Successo
+  success: Success
   question: Question
   manual_barcode: Manual input
   barcode_found: Barcode found
@@ -15,5 +15,4 @@ en:
   loading: Loading
   barcode:
     action:
-      name:
-        Send
+      name: Process
